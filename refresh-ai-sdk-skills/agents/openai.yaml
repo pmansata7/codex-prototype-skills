@@ -1,0 +1,7 @@
+interface:
+  display_name: "Refresh AI SDK Skills"
+  short_description: "Audit skill drift against official SDK docs"
+  default_prompt: "Use $refresh-ai-sdk-skills to audit this skill repo against current official AI SDK and AI Elements docs before making updates."
+
+policy:
+  allow_implicit_invocation: true

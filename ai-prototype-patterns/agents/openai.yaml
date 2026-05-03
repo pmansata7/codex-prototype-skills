@@ -1,0 +1,7 @@
+interface:
+  display_name: "AI Prototype Patterns"
+  short_description: "Implement the right AI feature pattern"
+  default_prompt: "Use $ai-prototype-patterns to choose and implement the right AI SDK pattern for this feature."
+
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Scaffold AI Prototype"
+  short_description: "Bootstrap a pattern-matched AI prototype"
+  default_prompt: "Use $scaffold-ai-prototype to scaffold a new AI prototype that matches this spec or primary pattern."
+
+policy:
+  allow_implicit_invocation: true

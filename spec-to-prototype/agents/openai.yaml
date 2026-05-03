@@ -1,0 +1,7 @@
+interface:
+  display_name: "Spec to Prototype"
+  short_description: "Turn ideas into executable SPEC.md plans"
+  default_prompt: "Use $spec-to-prototype to turn this product idea into a SPEC.md with ordered work packages and binary success criteria."
+
+policy:
+  allow_implicit_invocation: true
