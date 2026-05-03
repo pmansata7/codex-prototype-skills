@@ -167,6 +167,21 @@ def ensure_target_dirs(plan: InstallPlan) -> None:
     plan.install_root.mkdir(parents=True, exist_ok=True)
 
 
+def perform_install(plan: InstallPlan, force: bool) -> list[str]:
+    existing_manifest = load_existing_manifest(plan.manifest_path)
+    ensure_target_dirs(plan)
+
+    actions: list[str] = []
+    for skill_name in plan.skills:
+        source = ROOT / skill_name
+        destination = plan.install_root / skill_name
+        action = install_skill(source, destination, plan.mode, force)
+        actions.append(f"{action}: {skill_name}")
+
+    write_manifest(plan, existing_manifest)
+    return actions
+
+
 def print_plan(plan: InstallPlan) -> None:
     print(f"target_repo: {plan.target_repo}")
     print(f"install_root: {plan.install_root}")
@@ -189,22 +204,11 @@ def main() -> int:
         print_plan(plan)
         return 0
 
-    existing_manifest = load_existing_manifest(plan.manifest_path)
-    ensure_target_dirs(plan)
-
-    actions: list[str] = []
-
     try:
-        for skill_name in plan.skills:
-            source = ROOT / skill_name
-            destination = plan.install_root / skill_name
-            action = install_skill(source, destination, plan.mode, args.force)
-            actions.append(f"{action}: {skill_name}")
+        actions = perform_install(plan, args.force)
     except FileExistsError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 1
-
-    write_manifest(plan, existing_manifest)
 
     print("Installed skills successfully.")
     print_plan(plan)

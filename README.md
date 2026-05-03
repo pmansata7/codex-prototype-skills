@@ -1,140 +1,210 @@
 # codex-prototype-skills
 
-Version-controlled Codex skills for taking AI product ideas from spec to scaffold to implementation, plus a maintenance skill for keeping the repo aligned with fast-moving AI SDK and AI Elements changes.
+Forkable Codex skill starter for rapidly prototyping AI apps.
 
-## Purpose
+This repo is meant to be copied, forked, and adapted. It gives you a small starter set of Codex-specific skills plus helper scripts so you can go from idea to working prototype quickly.
 
-This repo is the source of truth for a small, opinionated skill chain:
+The core loop is:
+
+`idea -> spec -> scaffold -> implement`
+
+## Why This Repo Exists
+
+This repo gives you a practical starting point for Codex App workflows:
+
+- fork it to create your own skill repo
+- use the included Python scripts to create a new prototype subfolder or repo with the right starter skills installed
+- start from a chat prompt or drop in an `idea.md` file and use `spec-to-prototype` to shape the first spec
+- iterate on the spec until it is strong enough to build
+- use the scaffold and implementation skills to turn that spec into a prototype
+
+If you like, pair this with Codex plan mode to build the spec and implementation plan together before writing code.
+
+## What You Get
+
+This repository is the source of truth for a small Codex skill chain:
 
 1. `spec-to-prototype`
-   Turn a rough product idea into an execution-ready `SPEC.md` with ordered work packages, dependency graph, and binary success criteria.
+   Turns a rough idea into an execution-ready `SPEC.md` with scope, work packages, dependency order, and binary success criteria.
 2. `scaffold-ai-prototype`
-   Scaffold a Next.js + AI SDK starter that matches the primary pattern in the spec.
+   Scaffolds a Next.js + AI SDK starter that matches the selected prototype pattern.
 3. `ai-prototype-patterns`
-   Implement or extend the feature using the right AI SDK pattern.
+   Implements or extends the product using the right AI SDK interaction pattern.
 4. `refresh-ai-sdk-skills`
-   Audit this repo against official AI SDK, AI Elements, and shadcn/ui docs and recommend or apply maintenance updates after approval.
+   Helps maintain this skill repo against upstream AI SDK, AI Elements, and shadcn/ui changes.
 
-This repo is for centralizing, reviewing, and versioning the skills. Install, link, or sync them into target repos with `scripts/prototype_init.py` or your normal `npx skills` workflow.
-
-## Repo Layout
-
-- `spec-to-prototype/`
-- `scaffold-ai-prototype/`
-- `ai-prototype-patterns/`
-- `refresh-ai-sdk-skills/`
-- `docs/`
-  - `skill-watchlist.md`: upstream sources and high-risk APIs to monitor
-  - `skill-invariants.md`: local conventions that all skills must preserve
-  - `rapid-prototyping-setup.md`: recommended repo and skill distribution model for fast prototype work
-  - `prototype-create.md`: usage guide for one-command repo bootstrap plus skill install
-  - `prototype-init.md`: usage guide for the one-command local skill installer
-- `scripts/`
-  - `validate_skills.py`: repo-local skill validation
-  - `prototype_create.py`: create a prototype repo, optionally initialize git, and install selected skills
-  - `prototype_init.py`: install selected skills into a target repo using copy, link, or sync mode
-
-## Current Defaults
-
-- Default provider path: AI Gateway
-- Default model family: Gemini 3 Flash Preview
-- Pattern vocabulary shared across the repo:
-  - `chat`
-  - `tool-calling-chat`
-  - `generative-ui`
-  - `structured-generation`
-  - `server-workflow`
-  - `agent-loop`
-  - `voice`
+These are not generic prompts. They are intended for Codex App and Codex skill workflows.
 
 ## Recommended Workflow
 
-### New prototype
-
-1. Use `spec-to-prototype` to generate `SPEC.md`.
-2. Use `scaffold-ai-prototype` to scaffold the starter that matches the spec's primary pattern.
-3. Use `ai-prototype-patterns` to implement the real feature set.
-
-For repo setup and skill installation:
-
-- read [docs/rapid-prototyping-setup.md](docs/rapid-prototyping-setup.md)
-- use [docs/prototype-create.md](docs/prototype-create.md)
-- use [docs/prototype-init.md](docs/prototype-init.md)
-
-### Maintenance
-
-1. Use `refresh-ai-sdk-skills` when upstream SDK or component APIs may have changed.
-2. Review the proposed drift report.
-3. Approve edits.
-4. Re-run validation.
-
-## Validation
-
-Run:
-
-```bash
-python scripts/validate_skills.py
+```text
+Fork this repo
+  ->
+Create a prototype folder or repo with the helper script
+  ->
+Install the core skills into .codex/skills/
+  ->
+Start with an idea in chat or idea.md
+  ->
+Use spec-to-prototype to create and refine SPEC.md
+  ->
+Use scaffold-ai-prototype to generate the starter
+  ->
+Use ai-prototype-patterns to implement the product
+  ->
+Repeat until the prototype is ready
 ```
 
-The validator checks:
+```mermaid
+flowchart LR
+    A["Fork this repo"] --> B["Create a prototype repo or subfolder"]
+    B --> C["Install core Codex skills with the Python scripts"]
+    C --> D["Start from chat or idea.md"]
+    D --> E["spec-to-prototype<br/>create and refine SPEC.md"]
+    E --> F["scaffold-ai-prototype<br/>generate the starter"]
+    F --> G["ai-prototype-patterns<br/>implement the prototype"]
+    G --> H["Iterate with Codex chat or plan mode"]
+    H --> I["Add your own skills, or open a PR / issue"]
+```
 
-- required skill frontmatter
-- `agents/openai.yaml` presence
-- missing reference files
-- stale API patterns the repo no longer allows
-- required maintenance docs in `docs/`
-- shared pattern invariants
-- ASCII-only repo docs and skill files
+## Who It Is For
 
-## Prototype Setup
+Use this repo if you:
 
-For the default copied-skill workflow:
+- build AI prototypes regularly
+- use the Codex App or another Codex-compatible local skill workflow
+- want a reusable starter set instead of rebuilding your prototyping process every time
+- want a repo you can fork and extend with your own Codex skills
+
+## Quick Start
+
+Prerequisites:
+
+- Python 3.10+
+- Git if you want the helper script to initialize repos
+- Codex App or another environment that can use local Codex skills
+
+Create a fresh prototype repo:
 
 ```bash
 python3 scripts/prototype_create.py ../prototypes/my-idea
 ```
 
-Common variants:
+Install skills into an existing repo:
 
 ```bash
-python3 scripts/prototype_create.py ../prototypes/my-idea --mode link --skills core
-python3 scripts/prototype_create.py ../prototypes/my-idea --skills all
-python3 scripts/prototype_init.py ../prototypes/my-idea --mode link --skills core
-python3 scripts/prototype_init.py ../prototypes/my-idea --mode sync --skills core
-python3 scripts/prototype_init.py ../prototypes/my-idea --skills all
+python3 scripts/prototype_init.py ../prototypes/my-idea
 ```
 
-Use `prototype_create.py` for new repos and `prototype_init.py` for existing repos. Use `core` for the main prototyping chain and `all` when you want every skill in this repo installed into the target project.
+Then in the target repo:
 
-## Export A Public Copy
+1. start a Codex chat with your idea, or add an `idea.md`
+2. use `spec-to-prototype` to generate `SPEC.md`
+3. iterate on the spec until the scope and plan are clear
+4. use `scaffold-ai-prototype`
+5. use `ai-prototype-patterns`
 
-To create a clean copy of this repo for open-sourcing in a separate destination:
+## Skill Summary
+
+| Skill | Purpose | Typical output |
+| --- | --- | --- |
+| `spec-to-prototype` | Product/spec shaping | `SPEC.md` with scope, work packages, and success criteria |
+| `scaffold-ai-prototype` | Starter generation | Pattern-aligned Next.js + AI SDK scaffold |
+| `ai-prototype-patterns` | Feature implementation | Concrete code changes for the chosen interaction pattern |
+| `refresh-ai-sdk-skills` | Repo maintenance | Drift review and updates for this skill system |
+
+The shared pattern vocabulary is:
+
+- `chat`
+- `tool-calling-chat`
+- `generative-ui`
+- `structured-generation`
+- `server-workflow`
+- `agent-loop`
+- `voice`
+
+## Open-Source Stack Behind The Skills
+
+The skills in this repo are designed to work with a small, practical open-source stack for AI prototypes:
+
+- `next`: app shell, routing, API handlers, and build pipeline
+- `react`: interactive UI
+- `ai`: core AI SDK server primitives such as `streamText`, `generateText`, `tool()`, and `Output.object()`
+- `@ai-sdk/react`: client hooks such as `useChat` and `experimental_useObject`
+- `zod`: shared typed contracts for structured outputs and tool inputs
+- `ai-elements`: optional UI building blocks for chat, tool, reasoning, confirmation, and speech flows
+- `@ai-sdk/gateway`: default provider path
+- `@ai-sdk/google`, `@ai-sdk/anthropic`, `@ai-sdk/openai`, `@ai-sdk/groq`: optional provider packages depending on the prototype
+
+In practice, the skills use those packages together like this:
+
+```mermaid
+flowchart LR
+    A["spec-to-prototype"] --> B["scaffold-ai-prototype"]
+    B --> C["Next.js + React app"]
+    B --> D["AI SDK packages"]
+    B --> E["Optional AI Elements UI"]
+    C --> F["ai-prototype-patterns"]
+    D --> F
+    E --> F
+    F --> G["Routes using `ai` primitives"]
+    F --> H["UI using `@ai-sdk/react`"]
+    F --> I["Schemas using `zod`"]
+    G --> J["Provider package and model"]
+```
+
+That is the main reason this repo works well as a starter: the skills are not isolated prompts, they are a coordinated system built around a shared package stack and shared implementation patterns.
+
+## Extend It
+
+This repo is designed to be extended.
+
+You can:
+
+- add your own Codex skills in your fork
+- keep private team-specific skills in your forked copy
+- open issues to request new skills or workflow improvements
+- submit PRs if you want to improve the shared starter set
+
+The best default is usually:
+
+- keep this repo or your fork as the skill source of truth
+- create separate prototype repos as needed
+- install only the skills each prototype actually needs
+
+## Scripts
+
+- `scripts/prototype_create.py`: create a new prototype repo and install skills
+- `scripts/prototype_init.py`: install, link, or refresh skills in an existing repo
+- `scripts/validate_skills.py`: validate the skills, docs, and required release files
+- `scripts/export_open_source_repo.py`: create a clean publishable copy of the repo
+
+Script docs:
+
+- [`docs/prototype-create.md`](docs/prototype-create.md)
+- [`docs/prototype-init.md`](docs/prototype-init.md)
+- [`docs/rapid-prototyping-setup.md`](docs/rapid-prototyping-setup.md)
+- [`docs/export-open-source.md`](docs/export-open-source.md)
+
+## Validate The Repo
+
+Run:
 
 ```bash
-python3 scripts/export_open_source_repo.py . ../codex-prototype-skills --repo-name codex-prototype-skills
+python3 scripts/validate_skills.py
 ```
 
-The export script copies the publishable top-level files plus all skill folders, while skipping local repo artifacts such as `.git`, `.DS_Store`, and `__pycache__/`. When `--repo-name` is provided, it also rewrites exact source-repo name references in copied UTF-8 text files.
+Recommended verification:
 
-## Maintenance Policy
+```bash
+python3 scripts/validate_skills.py
+python3 scripts/prototype_create.py /tmp/codex-prototype-create-test --force
+python3 scripts/prototype_init.py /tmp/codex-prototype-create-test --mode sync --skills core
+```
 
-This repo assumes AI SDK and AI Elements can drift quickly.
+## Limitations
 
-Use these files to keep the skill set current:
-
-- `docs/skill-watchlist.md`
-- `docs/skill-invariants.md`
-- `refresh-ai-sdk-skills/`
-
-Run a maintenance review:
-
-- before copying these skills into another repo
-- weekly during active use
-- after major AI SDK or AI Elements releases
-- after migration-guide updates
-
-## Notes
-
-- The skills are intentionally opinionated and optimized for Codex use, not generic prompt libraries.
-- The references under each skill are part of the implementation contract and should be updated together with the skill body.
-- If upstream SDK changes force a pattern change, update all affected skills and `docs/skill-invariants.md` in the same pass.
+- The skills are intentionally opinionated.
+- They are optimized for Codex workflows, not every agent runtime.
+- They help bootstrap prototypes quickly, but downstream app quality still depends on implementation and review.
+- Upstream AI SDK and AI Elements APIs can drift, so maintenance still matters.

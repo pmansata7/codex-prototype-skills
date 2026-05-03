@@ -1,6 +1,6 @@
 # Skill Invariants
 
-Purpose: define the local conventions that all three skills must preserve unless the repo intentionally changes direction.
+Purpose: define the local conventions that the core skills must preserve unless the repo intentionally changes direction.
 
 ## Cross-Skill Invariants
 

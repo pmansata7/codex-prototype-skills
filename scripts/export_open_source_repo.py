@@ -9,6 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_INCLUDE_FILES = [
     "README.md",
+    "LICENSE",
     ".gitattributes",
     ".gitignore",
 ]
@@ -20,6 +21,12 @@ SKIP_NAMES = {
     ".DS_Store",
     ".git",
     "__pycache__",
+    ".pytest_cache",
+    ".mypy_cache",
+    ".ruff_cache",
+    ".venv",
+    "dist",
+    "build",
 }
 TEXT_SUFFIXES = {
     ".md",

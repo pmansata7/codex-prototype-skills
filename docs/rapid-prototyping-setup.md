@@ -1,6 +1,6 @@
 # Rapid Prototyping Setup
 
-Purpose: define a fast local workflow for using this repo's skills across many prototype ideas without losing a single source of truth.
+Purpose: define a practical workflow for using this repo's Codex skills across many prototype ideas without losing a single source of truth.
 
 ## Recommendation
 
@@ -8,7 +8,7 @@ Use this repo as the canonical skill source, keep prototype projects separate by
 
 Recommended default:
 
-1. Keep `codex-prototype-skills` as the source of truth.
+1. Keep this repo as the source of truth.
 2. Create one repo per serious prototype idea.
 3. In each prototype repo, add a project-local `.codex/skills/` view that points to only the needed skills from this repo.
 
@@ -77,7 +77,7 @@ Best for:
 - solo local use
 - cases where reproducibility matters less than speed
 
-Risk:
+Tradeoff:
 
 - project behavior depends on hidden machine state
 - it is harder to know which skill version a given prototype used
@@ -108,7 +108,7 @@ Best for:
 
 Risk:
 
-- changes in `codex-prototype-skills` affect active prototypes immediately
+- changes in the source skill repo affect active prototypes immediately
 
 This is the recommended default while the skills are still being refined.
 
@@ -141,7 +141,7 @@ Instead:
 
 ### Canonical repo
 
-- `codex-prototype-skills/` remains the home for authoring, validation, and maintenance
+- this repo remains the home for authoring, validation, and maintenance
 - use `scripts/prototype_create.py` for one-command new repo setup
 - use `scripts/prototype_init.py` to push or refresh selected skills in existing repos
 

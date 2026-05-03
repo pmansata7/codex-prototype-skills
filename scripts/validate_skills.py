@@ -7,6 +7,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILL_DIRS = sorted(path for path in ROOT.iterdir() if path.is_dir() and (path / "SKILL.md").exists())
+REQUIRED_ROOT_FILES = [
+    ROOT / "README.md",
+    ROOT / "LICENSE",
+]
 DOC_FILES = [
     ROOT / "docs" / "skill-watchlist.md",
     ROOT / "docs" / "skill-invariants.md",
@@ -58,6 +62,14 @@ def is_ascii(text: str) -> bool:
 
 
 errors: list[str] = []
+
+for root_file in REQUIRED_ROOT_FILES:
+    if not root_file.exists():
+        errors.append(f"{root_file}: missing required top-level release file")
+        continue
+    root_text = root_file.read_text(encoding="utf-8")
+    if not is_ascii(root_text):
+        errors.append(f"{root_file}: contains non-ASCII characters")
 
 for doc_file in DOC_FILES:
     if not doc_file.exists():
@@ -160,4 +172,3 @@ if errors:
     sys.exit(1)
 
 print(f"Validated {len(SKILL_DIRS)} skills successfully.")
-

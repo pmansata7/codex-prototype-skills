@@ -1,6 +1,6 @@
 # Prototype Create Script
 
-Purpose: create a fresh prototype repo folder, optionally initialize git, and install the selected local Codex skills in one command.
+Purpose: create a fresh prototype repo, optionally initialize Git, and install the selected local Codex skills in one command.
 
 ## Script
 
@@ -10,7 +10,7 @@ Run:
 python3 scripts/prototype_create.py <target-path>
 ```
 
-This is the fastest path for new idea repos. It creates the target folder, optionally initializes git, creates lightweight starter files when missing, and then installs skills into `.codex/skills/`.
+This is the fastest path for a new prototype repo. It creates the target folder, optionally initializes Git, creates lightweight starter files when missing, and then installs skills into `.codex/skills/`.
 
 ## Defaults
 

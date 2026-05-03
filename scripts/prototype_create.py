@@ -11,7 +11,13 @@ import prototype_init as installer
 DEFAULT_GIT_BRANCH = "main"
 DEFAULT_README_TEMPLATE = """# {name}
 
-Prototype repo bootstrapped from `codex-prototype-skills`.
+Prototype repo bootstrapped for a Codex skill workflow.
+
+Recommended flow:
+
+1. Use `spec-to-prototype` to create `SPEC.md`.
+2. Use `scaffold-ai-prototype` to scaffold the starter.
+3. Use `ai-prototype-patterns` to implement the product.
 """
 
 DEFAULT_GITIGNORE = """# Local env
@@ -163,36 +169,9 @@ def main() -> int:
             print(exc.stderr.strip() or "error: git init failed", file=sys.stderr)
             return 1
 
-    init_argv = [
-        str(plan.target_repo),
-        "--mode",
-        args.mode,
-        "--skills",
-        args.skills,
-    ]
-    if args.force:
-        init_argv.append("--force")
-
-    init_args = installer.parse_args.__globals__["argparse"].Namespace(
-        target=str(plan.target_repo),
-        mode=args.mode,
-        skills=args.skills,
-        force=args.force,
-        dry_run=False,
-    )
-
     try:
-        init_plan = installer.build_plan(init_args.target, init_args.mode, init_args.skills)
-        existing_manifest = installer.load_existing_manifest(init_plan.manifest_path)
-        installer.ensure_target_dirs(init_plan)
-
-        actions: list[str] = []
-        for skill_name in init_plan.skills:
-            source = installer.ROOT / skill_name
-            destination = init_plan.install_root / skill_name
-            action = installer.install_skill(source, destination, init_plan.mode, init_args.force)
-            actions.append(f"{action}: {skill_name}")
-        installer.write_manifest(init_plan, existing_manifest)
+        init_plan = installer.build_plan(str(plan.target_repo), args.mode, args.skills)
+        actions = installer.perform_install(init_plan, args.force)
     except FileExistsError as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 1

@@ -1,6 +1,6 @@
 # Prototype Init Script
 
-Purpose: provide a one-command way to install the repo's Codex skills into a target prototype repo.
+Purpose: provide a one-command way to install this repo's Codex skills into a target prototype repo.
 
 ## Script
 
@@ -57,7 +57,7 @@ Use when:
 
 - you want a stable per-project snapshot
 - you may share or archive the prototype repo
-- you do not want later edits in `codex-prototype-skills` to affect the prototype automatically
+- you do not want later edits in the source skill repo to affect the prototype automatically
 
 Example:
 
